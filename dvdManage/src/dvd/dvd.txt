@@ -1,0 +1,2 @@
+"Now I'm on Net Beans", "That took way too long".
+"Yeah, it did."
