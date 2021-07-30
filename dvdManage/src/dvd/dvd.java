@@ -1,17 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dvd;
 
 /**
  *
- * @author Samma
+ * @author Sam Cryan
  */
 public class Dvd {
-	
-
 	String title;
         String mpaa;
 	String releaseDate;
@@ -27,6 +20,4 @@ public class Dvd {
 		this.studio = nStudio;
 		this.notes=nNotes;
 	}
-
-
-} 
+}

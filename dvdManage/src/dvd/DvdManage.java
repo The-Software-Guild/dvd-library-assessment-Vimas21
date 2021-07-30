@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dvd;
 
 import java.io.*;
@@ -16,13 +11,13 @@ public class DvdManage {
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
         boolean more = true;
-        String choice = "";
+        String choice = ""; // We will use choice across the board to measure input.
         Scanner inputCheck = new Scanner(System.in);
         
         System.out.println("Welcome to the DVD manager. Please enter the name of the txt file you wish to access.");
         choice = inputCheck.nextLine();
         String pastFile = choice;
-        HashMap<String, Dvd> shelf = load(pastFile);
+        HashMap<String, Dvd> shelf = load(pastFile); // Load takes a file ID and returns a Hashmap of all DVDs available.
         System.out.println("Load complete. ");
         
         do {
@@ -64,11 +59,13 @@ public class DvdManage {
                    more = false;
             }
         } while (more == true);
+        
         System.out.println("Before we finish up, I need to know where to save this file to.");
         System.out.println("Type \"same\" if you want it to save where you loaded from.");
         System.out.println("Type \"new\" if you want it to save to a new file.");
         System.out.println("Type \"skip\" if you don't want to save it.");
         boolean answerGiven=false;
+        
         do{
             choice = inputCheck.nextLine();
             if(choice.equalsIgnoreCase("same")){
@@ -93,17 +90,20 @@ public class DvdManage {
     private static HashMap<String, Dvd> load(String fileName) throws FileNotFoundException, IOException {
         HashMap<String, Dvd> shelf = new HashMap<>();
         Scanner sc = new Scanner(new BufferedReader(new FileReader(fileName)));
+        
         while (sc.hasNextLine()) {
             Dvd freshDvd = nameBreakdown(sc.nextLine());
             shelf.put(freshDvd.title, freshDvd);
         }
+        
         return shelf;
     }
     
     private static void save(HashMap<String, Dvd> shelf, String fileName) throws IOException{
-        File toFile = new File(fileName);
+        File toFile = new File(fileName); // Checks the file, and makes a new one if nescessary.
         Set<String> keys = shelf.keySet();
         PrintWriter out = new PrintWriter(new FileWriter(fileName));
+        
         for(String k : keys){
             Dvd currentDvd = shelf.get(k);
             out.println(k+ "\"" + currentDvd.releaseDate + "\"" + currentDvd.mpaa + "\"" + currentDvd.director + "\""  + currentDvd.studio + "\"" + currentDvd.notes);
@@ -114,9 +114,10 @@ public class DvdManage {
 
     private static Dvd nameBreakdown(String full) {
         String[] splitted = full.split("\"");
-        for (int i = 0; i < splitted.length; i++) {
-            System.out.println(splitted[i]);
-        }
+        //for (int i = 0; i < splitted.length; i++) {
+            //System.out.println(splitted[i]);
+        //}
+        // The order this is released is: Title, date, rating, director, studio, notes.
         Dvd newby = new Dvd(splitted[0], splitted[1], splitted[2], splitted[3], splitted[4], splitted[5]);
         return newby;
     }
@@ -181,6 +182,7 @@ public class DvdManage {
         System.out.println("What movie would you like to remove?");
         String choice = input.nextLine();
         System.out.println("Searching for movie...");
+        
         if(shelf.containsKey(choice)){
             shelf.remove(choice);
             System.out.println("Got it- movie removed.");
