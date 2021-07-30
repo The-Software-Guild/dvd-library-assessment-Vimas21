@@ -9,7 +9,7 @@ package dvd;
  *
  * @author Samma
  */
-public class dvd {
+public class Dvd {
 	
 
 	String title;
@@ -19,7 +19,7 @@ public class dvd {
 	String studio;
 	String notes;
 
-	dvd(String nTitle, String nRelease, String rating, String nDirector, String nStudio, String nNotes) {
+	Dvd(String nTitle, String nRelease, String rating, String nDirector, String nStudio, String nNotes) {
 		this.title = nTitle;
 		this.releaseDate = nRelease;
 		this.mpaa = rating;
