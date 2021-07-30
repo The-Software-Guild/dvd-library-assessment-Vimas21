@@ -26,6 +26,7 @@ public class DvdManage {
             System.out.println("Type \"all\" to see the name of each and every flick.");
             System.out.println("Type \"details \" if you want to see the details on an available flick.");
             System.out.println("Type \"add\" to add a new movie.");
+            System.out.println("Type \"edit\" to edit an existing movie.");
             System.out.println("Type \"remove\" to remove an existing movie.");
             System.out.println();
             choice = inputCheck.nextLine();
@@ -41,6 +42,10 @@ public class DvdManage {
             }
             else if(choice.equalsIgnoreCase("add")){
                 addMovie(shelf, inputCheck);
+            }
+            
+            else if(choice.equalsIgnoreCase("edit")){
+                
             }
             
             else if(choice.equalsIgnoreCase("remove")){
@@ -177,8 +182,71 @@ public class DvdManage {
         shelf.put(name, new Dvd(name, date, rating, director, studio, notes));
         System.out.println("Cool. I've added it to the shelf.");
     }
+    
+    private static void editMovie(HashMap<String,Dvd> shelf, Scanner input){
+        System.out.println("What movie are we editing?");
+        String choice = input.nextLine();
+        String key = choice;
+        if(!shelf.containsKey(key)){
+            System.out.println("Movie not found.");
+            return;
+        }
+        System.out.println("Movie found.");
+        
+        boolean movingOn = false;
+        do{
+            System.out.println("What would you like to edit? Title, Date, Rating, Director, Studio, or Notes?");
+            choice = input.nextLine();
+            if(choice.equalsIgnoreCase("Title")){
+                System.out.println("The current title is: " + key);
+                System.out.println("What would you like the new title to be?");
+                choice = input.nextLine();
+                shelf.get(key).title = choice;
+                Dvd transferDvd = shelf.remove(key);
+                shelf.put(key, transferDvd);
+            }
+            else if(choice.equalsIgnoreCase("Date")){
+                System.out.println("The current date is: " + shelf.get(key).releaseDate);
+                System.out.println("What would you like the new date to be?");
+                choice = input.nextLine();
+                shelf.get(key).releaseDate = choice;
+            }
+            else if(choice.equalsIgnoreCase("Rating")){
+                System.out.println("The current rating is: " + shelf.get(key).releaseDate);
+                System.out.println("What would you like the new rating to be?");
+                choice = input.nextLine();
+                shelf.get(key).mpaa = choice;
+            }
+            else if(choice.equalsIgnoreCase("Director")){
+                System.out.println("The current director is: " + shelf.get(key).director);
+                System.out.println("Who would you like the new director to be?");
+                choice = input.nextLine();
+                shelf.get(key).director = choice;
+            }
+            else if(choice.equalsIgnoreCase("Studio")){
+                System.out.println("The current studio is: " + shelf.get(key).studio);
+                System.out.println("Who would you like the new studio to be?");
+                choice = input.nextLine();
+                shelf.get(key).studio = choice;
+            }
+            else if(choice.equalsIgnoreCase("Notes")){
+                System.out.println("The current notes are: " + shelf.get(key).notes);
+                System.out.println("Who would you like the new notes to be?");
+                choice = input.nextLine();
+                shelf.get(key).notes = choice;
+            }
+            else{
+                System.out.println("Sorry, didn't catch that.");
+            }
+            System.out.println("Want to change more? Type yes if so.");
+            choice = input.nextLine();
+            if(choice.equalsIgnoreCase("Yes")){
+                movingOn=true;
+            }
+        }while(movingOn==false);
+    }
 
-    public static void removeMovie(HashMap<String,Dvd> shelf, Scanner input){
+    private static void removeMovie(HashMap<String,Dvd> shelf, Scanner input){
         System.out.println("What movie would you like to remove?");
         String choice = input.nextLine();
         System.out.println("Searching for movie...");
