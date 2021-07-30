@@ -17,7 +17,7 @@ public class DvdManage {
         System.out.println("Welcome to the DVD manager. Please enter the name of the txt file you wish to access.");
         choice = inputCheck.nextLine();
         String pastFile = choice;
-        HashMap<String, Dvd> shelf = load(pastFile); // Load takes a file ID and returns a Hashmap of all DVDs available.
+        HashMap<String, Disc> shelf = load(pastFile); // Load takes a file ID and returns a Hashmap of all DVDs available.
         System.out.println("Load complete. ");
         
         do {
@@ -45,7 +45,7 @@ public class DvdManage {
             }
             
             else if(choice.equalsIgnoreCase("edit")){
-                
+                editMovie(shelf, inputCheck);
             }
             
             else if(choice.equalsIgnoreCase("remove")){
@@ -92,42 +92,42 @@ public class DvdManage {
         } while(!answerGiven);
     }
 
-    private static HashMap<String, Dvd> load(String fileName) throws FileNotFoundException, IOException {
-        HashMap<String, Dvd> shelf = new HashMap<>();
+    private static HashMap<String, Disc> load(String fileName) throws FileNotFoundException, IOException {
+        HashMap<String, Disc> shelf = new HashMap<>();
         Scanner sc = new Scanner(new BufferedReader(new FileReader(fileName)));
         
         while (sc.hasNextLine()) {
-            Dvd freshDvd = nameBreakdown(sc.nextLine());
+            Disc freshDvd = nameBreakdown(sc.nextLine());
             shelf.put(freshDvd.title, freshDvd);
         }
         
         return shelf;
     }
     
-    private static void save(HashMap<String, Dvd> shelf, String fileName) throws IOException{
+    private static void save(HashMap<String, Disc> shelf, String fileName) throws IOException{
         File toFile = new File(fileName); // Checks the file, and makes a new one if nescessary.
         Set<String> keys = shelf.keySet();
         PrintWriter out = new PrintWriter(new FileWriter(fileName));
         
         for(String k : keys){
-            Dvd currentDvd = shelf.get(k);
+            Disc currentDvd = shelf.get(k);
             out.println(k+ "\"" + currentDvd.releaseDate + "\"" + currentDvd.mpaa + "\"" + currentDvd.director + "\""  + currentDvd.studio + "\"" + currentDvd.notes);
         }
         out.flush();
         out.close();
     }
 
-    private static Dvd nameBreakdown(String full) {
+    private static Disc nameBreakdown(String full) {
         String[] splitted = full.split("\"");
         //for (int i = 0; i < splitted.length; i++) {
             //System.out.println(splitted[i]);
         //}
         // The order this is released is: Title, date, rating, director, studio, notes.
-        Dvd newby = new Dvd(splitted[0], splitted[1], splitted[2], splitted[3], splitted[4], splitted[5]);
+        Disc newby = new Disc(splitted[0], splitted[1], splitted[2], splitted[3], splitted[4], splitted[5]);
         return newby;
     }
     
-    private static void search(HashMap<String, Dvd> library, Scanner input){
+    private static void search(HashMap<String, Disc> library, Scanner input){
         System.out.println("Okay, what are we looking for?");
         String choice = input.nextLine();
         System.out.println("Alright, searching....");
@@ -140,7 +140,7 @@ public class DvdManage {
         }
     }
     
-    private static void allPrint(HashMap<String, Dvd> shelf){
+    private static void allPrint(HashMap<String, Disc> shelf){
         System.out.println("Okay, here we go!");
         Set<String> keys = shelf.keySet();
         
@@ -149,13 +149,13 @@ public class DvdManage {
         }
     }
     
-    private static void details(HashMap<String,Dvd> shelf, Scanner input){
+    private static void details(HashMap<String,Disc> shelf, Scanner input){
         System.out.println("Okay, what movie do we want?");
         String choice = input.nextLine();
         System.out.println("Let me look that up...");
         
         if(shelf.containsKey(choice)){
-            Dvd discOfChoice = shelf.get(choice);
+            Disc discOfChoice = shelf.get(choice);
             System.out.println(discOfChoice.title + " was released on " +
                     discOfChoice.releaseDate + ". It was directed by " + discOfChoice.director + " at " + discOfChoice.studio +
                     ". It is rated " + discOfChoice.mpaa + ".");
@@ -166,7 +166,7 @@ public class DvdManage {
         }
     }
     
-    private static void addMovie(HashMap<String,Dvd> shelf, Scanner input){
+    private static void addMovie(HashMap<String,Disc> shelf, Scanner input){
         System.out.println("Alright, let's add a movie! First, I'll need a name.");
         String name = input.nextLine();
         System.out.println("When was it released?");
@@ -179,11 +179,11 @@ public class DvdManage {
         String rating = input.nextLine();
         System.out.println("Any other notes? Input them here.");
         String notes = input.nextLine();
-        shelf.put(name, new Dvd(name, date, rating, director, studio, notes));
+        shelf.put(name, new Disc(name, date, rating, director, studio, notes));
         System.out.println("Cool. I've added it to the shelf.");
     }
     
-    private static void editMovie(HashMap<String,Dvd> shelf, Scanner input){
+    private static void editMovie(HashMap<String,Disc> shelf, Scanner input){
         System.out.println("What movie are we editing?");
         String choice = input.nextLine();
         String key = choice;
@@ -202,7 +202,7 @@ public class DvdManage {
                 System.out.println("What would you like the new title to be?");
                 choice = input.nextLine();
                 shelf.get(key).title = choice;
-                Dvd transferDvd = shelf.remove(key);
+                Disc transferDvd = shelf.remove(key);
                 shelf.put(key, transferDvd);
             }
             else if(choice.equalsIgnoreCase("Date")){
@@ -246,7 +246,7 @@ public class DvdManage {
         }while(movingOn==false);
     }
 
-    private static void removeMovie(HashMap<String,Dvd> shelf, Scanner input){
+    private static void removeMovie(HashMap<String,Disc> shelf, Scanner input){
         System.out.println("What movie would you like to remove?");
         String choice = input.nextLine();
         System.out.println("Searching for movie...");

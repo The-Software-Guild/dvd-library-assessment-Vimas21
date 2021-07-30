@@ -4,7 +4,7 @@ package dvd;
  *
  * @author Sam Cryan
  */
-public class Dvd {
+public class Disc {
 	String title;
         String mpaa;
 	String releaseDate;
@@ -12,7 +12,7 @@ public class Dvd {
 	String studio;
 	String notes;
 
-	Dvd(String nTitle, String nRelease, String rating, String nDirector, String nStudio, String nNotes) {
+	Disc(String nTitle, String nRelease, String rating, String nDirector, String nStudio, String nNotes) {
 		this.title = nTitle;
 		this.releaseDate = nRelease;
 		this.mpaa = rating;
